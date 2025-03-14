@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protoripo</title>
+</head>
+<body align="center">
+    <h1>Simulador Financeiro!</h1>
+    <h3>Quantos compressores de amônia há em suas instalações?</h3>
+    <input type="text" id="input_compress">
+    <h3>Quantos condensadores de amônia há em suas instalações?</h3>
+    <input type="text" id="input_condensador">
+    <h3>Quantos evaporadores de amônia há em suas instalações?</h3>
+    <input type="text" id="input_evaporador">
+    <br><br>
+    <button onclick="simular()">Simular</button>
+    <div id="div_mensagem"></div>
+</body>
+</html>
+
+<script>
+    function simular(){
+        var compressor = (Number(input_compress.value))*30000
+        var condensador = (Number(input_condensador.value))*40000
+        var evaporador = (Number(input_evaporador.value))*20000
+        var custoReforma= (compressor + condensador + evaporador).toFixed(2)
+        var manutCompressor = (Number(input_compress.value))*(30000*0.1)
+        var manutCondensador = (Number(input_condensador.value))*(40000*0.1)
+        var manutEvaporador = (Number(input_evaporador.value))*(20000*0.1)
+        var custoManutencao = (manutCompressor + manutCondensador + manutEvaporador).toFixed(2)
+        var sensor = ((Number(input_compress.value))*3000).toFixed(2)
+        var lucro1 = ((custoReforma - sensor)).toFixed(2)
+        var lucro2 = ((custoManutencao - sensor)).toFixed(2)
+
+        div_mensagem.innerHTML=`<br>
+            O custo para a troca de todas os equipamentos seria de: <b style="color:red">R$${custoReforma}</b>.<br>
+            O custo para a manutenção de todos os equipamentos seria de : <b style="color:red">R$${custoManutencao}</b>.<br>
+            O custo do nosso serviço de monitoramento seria de: <b style="color:red">R$${sensor}</b>.<br>
+            Caso 1 - lucro seria de: <b style="color:green">R$${lucro1}</b>.<br>
+            Caso 2 - lucro seria de: <b style="color:green">R$${lucro2}</b>.
+        `
+    }
+
+</script>
