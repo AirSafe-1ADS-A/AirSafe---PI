@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Financeiro</title>
+</head>
+<body align="center">
+    
+    <h1> Simulador Financeiro AirSafe </h1> <br><br>
+    <div style="border: 3px solid red; margin: 0 15%; border-radius: 20px;">
+    <h1> Calcular Manutenção das Máquinas</h1>
+    <div style="border: 3px solid red; margin: 0 15%; border-radius: 20px;">
+    <h3> Insira o custo da mão de obra da manutenção: </h3> <br>
+    <input type="Number" id="input_custoMaoObra"><br>
+    <h5>O custo da mão de obra é crucial no calculo de prejuizos e lucros pelo seu alto nível de carência da mão de obra</h5>
+    <br><br>
+    </div>
+    <br><br>
+    <div style="border: 3px solid red; margin: 0 15%; border-radius: 20px;">
+    <h3> Insira o custo das peças da manutenção: </h3> <br>
+    <input type="Number" id="input_custoPecasManutencao"><br>
+    <h5>O custo das peças assim como o da mão de obra é crucial pois com ele temos uma média de custo por máquina em manutenção</h5>
+    <br><br>
+    </div>
+    <br><br>
+    <div style="border: 3px solid red; margin: 0 15%; border-radius: 20px;">
+    <h3> Insira o número de máquinas que necessitam de manutenção: </h3>
+    <input type="Number" id="input_qtdMaquinas"><br>
+    <h5>O número de máquinas afetadas ou que necessitam de manutenção é um número necessário pra calculo de media de custo por máquina</h5>
+    </div>
+    <br><br>
+    <div style="border: 3px solid red; margin: 0 15%; border-radius: 20px;">
+    <h3> Insira o número de dias parados para manutenção das máquinas: </h3>
+    <input type="Number" id="input_diasParados"><br>
+    <h5>O número de dias parados é um número importante pois trás a tona o prejuizo gasto em dias totais e estima-se que a cada 1 dia parado ocorre um prejuizo de pouco mais de R$1000</h5>
+    </div>
+    <button style="margin-top: 5%; margin-bottom: 5%;width: 50; height: 50;" onclick="calcularManutencao()">Calcular manutenção Máquinas</button>
+    <div id="div_resultadoMaquinas"></div>
+    </div>
+    <br><br>
+    <div style="border: 3px solid red; margin: 0 15%; border-radius: 20px;">
+    <h1>Calcular investimento!</h1>
+    
+    <br><br>
+    <div style="border: 3px solid red; margin: 0 15%; border-radius: 20px;">
+
+    <h3>Insira a área total (m²):</h3>
+    <br><br>
+    <input type="number" id="input_area" placeholder="Ex: 200">
+    <br>
+    <h5>Para calcular o quanto você cliente ira investir precisamos da simples informação de quantos metros quadrados (m²) que você tem máquinas refrigeradoras trabalhando pois nosso sensor
+        MQ2 só calcula num raio de 50 m².
+    </h5>
+    <br><br>
+    <button onclick="calcularInvestimentos()">Calcular Investimentos</button>
+    <br><br>
+    </div>
+    <br><br>
+    <div id="div_msg"></div>
+
+</body>
+</html>
+<script>
+
+    function calcularManutencao(){
+    custoMaoObra = Number(input_custoMaoObra.value)
+    custosPecaMan = Number(input_custoPecasManutencao.value)
+    qtdMaquinas = Number(input_qtdMaquinas.value)
+    diasParados = Number(input_diasParados.value)
+
+
+    custosTotaisMaquina = custoMaoObra + (custosPecaMan * qtdMaquinas) + (diasParados * 1000)
+    mediaMaquinas = qtdMaquinas / custosPecaMan
+    div_resultadoMaquinas.innerHTML = `Durante o tempo perdido de ${diasParados} dias, estima-se que o prejuizo contando custos de mão de obra, peças e maquinas é de R$ ${custosTotaisMaquina}<br>
+                                         o nosso sistema com sensores visa tornar esse prejuizo em lucro com o monitoramento para que não chegue a ser necessário esses gastos com manutenção<br><br>`
+    }
+    function calcularInvestimentos(){
+         
+        var area = Number(input_area.value);
+        var sensor = 50;
+        var valorBase = 10000;
+        var sensorExtra = 3000;
+
+        if (area <=0 ){
+            alert("Insira um valor válido!");
+        } if (area >0 && area <=50){
+            div_msg.innerHTML = `
+            Você precisará de 1 sensor. <br>
+            O valor do seu investimento será de R$ ${valorBase}
+            <br><br>`
+        }
+        else {
+            var sensoresNecessarios = Math.ceil(area/sensor);
+            var valorTotal = valorBase + (sensoresNecessarios - 1) * sensorExtra;
+            div_msg.innerHTML = `
+            Você precisará de ${sensoresNecessarios} sensores.<br>
+            O valor do seu investimento será de R$ ${valorTotal}
+            <br><br>`
+        }
+        div_msg.innerHTML += `E nesse cenário seu lucro seria de : R$ ${custosTotaisMaquina-valorTotal}`
+    }
+</script>
