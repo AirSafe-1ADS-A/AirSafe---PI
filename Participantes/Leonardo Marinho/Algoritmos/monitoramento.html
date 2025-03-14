@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Economia</title>
+</head>
+<body align="center" style="background-color: black; color: white;">
+
+    <h1>Calculadora de Economia</h1>
+
+    <p>Gasto com Manutenção Corretiva (R$):</p>
+    <input type="number" id="input_manutencaoCorretiva">
+    <br><br>
+
+    <p>Gasto com Manutenção Preventiva (R$):</p>
+    <input type="number" id="input_manutencaoPreventiva">
+    <br><br>
+
+    <p>Quantidade de gás vazado por dia (kg):</p>
+    <input type="number" id="input_vazamentoDia">
+    <br><br>
+
+    <p>Preço do gás (R$ por kg):</p>
+    <input type="number" id="input_precoGas">
+    <br><br>
+
+    <p>Dias de operação por ano:</p>
+    <input type="number" id="input_diasOperacao" placeholder="Ex:365">
+    <br><br>
+
+    <p>Custo do sistema de monitoramento (R$):</p>
+    <input type="number" id="input_custoMonitoramento">
+    <br><br>
+
+    <button onclick="calcularEconomia()">Calcular Economia</button>
+
+    <div id="div_mensagem"></div>
+
+    <script>
+        function calcularEconomia() {
+            // Cálculo do Gasto Atual com Manutenção
+            // Soma dos custos de manutenção corretiva e preventiva
+            var gastoAtual = Number(input_manutencaoCorretiva.value) + Number(input_manutencaoPreventiva.value);
+
+            // Cálculo do Custo Anual do Vazamento de Gás
+            // Multiplicamos a quantidade de gás vazado por dia pelo número de dias de operação no ano e pelo preço do gás
+            var custoVazamentoAnual = Number(input_vazamentoDia.value) * Number(input_diasOperacao.value) * Number(input_precoGas.value);
+
+            // Cálculo da Economia Estimada
+            // Pegamos o custo anual do vazamento e subtraímos o custo do sistema de monitoramento
+            var economia = custoVazamentoAnual - Number(input_custoMonitoramento.value);
+
+            // Cálculo do ROI (Retorno sobre Investimento)
+            // Dividimos a economia pelo custo do monitoramento e multiplicamos por 100 para obter o ROI em porcentagem
+            var roi = (economia / Number(input_custoMonitoramento.value)) * 100;
+
+            // Exibição dos resultados na tela usando innerHTML
+            div_mensagem.innerHTML = `Gasto Atual com Manutenção: <strong>R$ ${gastoAtual}</strong><br>
+                                   Custo Anual com Vazamento: <strong>R$ ${custoVazamentoAnual}</strong><br>
+                                   Economia Estimada: <strong>R$ ${economia}</strong><br>
+                                   Retorno sobre Investimento (ROI): <strong>${roi}%</strong>`;
+        }
+    </script>
+
+</body>
+</html>
