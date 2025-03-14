@@ -1,0 +1,115 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador</title>
+    <style>
+        body{
+            text-align: center;
+            color: black;
+        }
+    </style>
+</head>
+<body>  
+    Informe o custo anual de manutenção (em reais)
+    <input type="number" id="input_manutencao">
+
+    <br><br>Informe o faturamento diário da empresa (em reais)
+    <input type="number" id="input_faturamento">
+    
+    <br><br>Informe a área total de câmara fria da empresa (em metros quadrados)
+    <input type="number" id="input_area">
+
+    <br><br>Informe a quantidade de trabalhadores
+    <input type="number" id="input_qtdFuncionarios">
+
+    <br><br>Informe se a sua empresa é reincidente (já recebeu processo) [Sim/Não]
+    <input type="text" id="input_reincidente">
+
+    <br><br><button onclick="calcular()">Calcular</button>
+    
+    <div id="div_mensagem"></div>
+</body>
+</html>
+<script>
+    function calcular() {
+                var faturamento = Number(input_faturamento.value);
+
+                var porte = '';
+                var reincidente = input_reincidente.value
+                var qtdFuncionarios = Number(input_qtdFuncionarios.value)
+
+                var valorMultaFuncionario = 0;
+                var custoDesenvolvimento = 0;
+                var valorSensor = 0;
+                var areaSensor = 0;
+                var area = Number(input_area.value);
+
+                //Análise do porte 
+                if (area <= 500) {
+                    porte = "Pequeno"
+                    custoDesenvolvimento = 10000;
+                    valorSensor = 3000;
+                    areaSensor = 50;
+
+                    if (reincidente == "Sim") {
+                        valorMultaFuncionario = qtdFuncionarios * 1250 * 1.20
+                    }else {
+                        valorMultaFuncionario = qtdFuncionarios * 1000
+                    }
+                }else if (area <= 1000) {
+                    porte = "Médio"
+                    custoDesenvolvimento = 15000;
+                    valorSensor = 5000;
+                    areaSensor = 75;
+
+                    if (reincidente == "Sim") {
+
+                        valorMultaFuncionario = qtdFuncionarios * 3200 * 1.20
+                    }else {
+                        valorMultaFuncionario = qtdFuncionarios * 3000
+                    }
+                }else if (area > 1000) {
+                    porte = "Grande"
+                    custoDesenvolvimento = 20000;
+                    valorSensor = 10000;
+                    areaSensor = 100;
+
+                    if (reincidente == "Sim") {
+
+                            valorMultaFuncionario = qtdFuncionarios * 10000 * 1.20
+
+                        }else {
+                            valorMultaFuncionario = qtdFuncionarios * 10000
+                        }
+                }else{
+                    alert("A área informada está inválida.")
+                }
+                var pessoa = valorMultaFuncionario / qtdFuncionarios
+
+                //Custo do software
+                
+                var qtdSensores = Math.ceil(Number(area) / areaSensor)
+                var valorArea = qtdSensores * valorSensor; // quantidade de sensor e valor dos sensores
+                var valorSistema = custoDesenvolvimento + valorArea;
+
+
+                div_mensagem.innerHTML = 
+                    `<p>Faturamento Diário: R$ ${faturamento}</p>
+
+                    <p><br>O valor total do sistema será de R$: ${valorSistema}.</p>
+
+                    <p>Cada sensor abrange uma área de ${areaSensor}m²</p>
+
+                    <p>A sua empresa precisará de ${qtdSensores} sensores tendo em vista a área de ${area} m², o porte da sua empresa é considerado ${porte}</p>
+
+                    <p><br> Considerando os danos por pessoa no setor frigorífico com ${qtdFuncionarios} funcionários, <br>
+                    o valor da multa para a empresa, de porte ${porte}, é de ${valorMultaFuncionario + 500000}. <br></p>
+
+                    <p>Com o monitoramento do AirSafe, a empresa economizaria R$ ${valorMultaFuncionario + 500000}, totalizando R$${pessoa} <br>
+                    por funcionário e R$500.000 acerca da multa ambiental, uma vez que o vazamento seria alertado antes de causar danos severos.</p>`
+    }
+</script> 
+
+        
