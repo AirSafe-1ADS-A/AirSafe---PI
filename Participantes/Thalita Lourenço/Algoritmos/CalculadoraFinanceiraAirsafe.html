@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALCULADORA FINANCEIRA AIRSAFE</title>
+</head>
+<body style="text-align: center; background-color: whitesmoke;">
+    <h2>CACULADORA FINANCEIRA</h2>
+    <h1>AIRSAFE</h1>
+    <br>
+    <br>
+    <h2>CUSTOS DE MANUTENÇÃO</h2>
+    <br>
+    <h4>INSIRA O CUSTO DE PEÇAS POR MANUTENÇÃO</h4>
+    <input type="text" id="input_CustoPecasManutencao" placeholder="INSIRA O CUSTO DE PEÇAS POR MANUTENÇÃO">
+    <h4>INSIRA O CUSTO DE MÃO DE OBRA POR MANUTENÇÃO</h4>
+    <input type="text" id="input_MaoDeObraManutencao" placeholder="INSIRA O CUSTO DE MÃO DE OBRA POR MANUTENÇÃO">
+    <h4>INSIRA O NÚMERO DE MANUTENÇÕES POR ANO</h4>
+    <input type="text" id="input_ManutencoesPorAno" placeholder="INSIRA O NÚMERO DE MANUTENÇÕES POR ANO">
+    <br>
+    <br>
+    <br>
+    <h2>CUSTOS COM MULTAS E INDENIZAÇÕES</h2>
+    <br>
+    <h4>INSIRA O VALOR DA MULTA FIXA POR VAZAMENTO EM R$</h4>
+    <input type="text" id="input_ValorFixoMultaVazamento" placeholder="INSIRA O VALOR DA MULTA FIXA POR VAZAMENTO EM R$">
+    <h4>INSIRA O VALOR DA MULTA DIARIA EM CASO DE DESCUMPRIMENTO EM R$</h4>
+    <input type="text" id="input_ValorDiarioDescumprimento" placeholder="INSIRA O VALOR DA MULTA DIARIA EM CASO DE DESCUMPRIMENTO EM R$">
+    <h4>INSIRA O NUMERO DE DIAS EM CASO DE DESCUMPRIMENTO</h4>
+    <input type="text" id="input_NumeroDiasDescumprimento" placeholder="INSIRA O NUMERO DE DIAS EM CASO DE DESCUMPRIMENTO">
+    <h4>INSIRA O NÚMERO DE TRABALHADORES AFETADOS COM O VAZAMENTO</h4>
+    <input type="text" id="input_NumeroTrabalhadoresAfetados" placeholder="INSIRA O NÚMERO DE TRABALHADORES AFETADOS COM O VAZAMENTO">
+    <h4>INSIRA O VALOR DA INDENIZAÇÃO POR TRABALHADOR EM R$</h4>
+    <input type="text" id="input_ValorIndenizacaoPorTrabalhador" placeholder="INSIRA O VALOR DA INDENIZAÇÃO POR TRABALHADOR EM R$">
+    <br>
+    <br>
+    <br>
+    <h2>ECONOMIA GERADA PELO SENSOR</h2>
+    <br>
+    <h4>INSIRA O CUSTO DO SENSOR E INSTALAÇÃO EM R$</h4>
+    <input type="text" id="input_CustoDoSensoreInstalacao" placeholder="INSIRA O CUSTO DO SENSOR E INSTALAÇÃO EM R$">
+    <h4>INSIRA O CUSTO DE MANUTENÇÃO ANUAL DO SENSOR</h4>
+    <input type="text" id="input_CustoManutencaoAnualSensor" placeholder="INSIRA O CUSTO DE MANUTENÇÃO ANUAL DO SENSOR">
+    <br>
+    <br>
+    <br>
+    <h2>PERDA DE PRODUÇÃO GERADA POR PARALISAÇÃO</h2>
+    <br>
+    <h4>INSIRA O FATURAMENTO MÉDIO DIÁRIO DA EMPRESA EM R$</h4>
+    <input type="text" id="input_FaturamentoDiario" placeholder="INSIRA O FATURAMENTO MÉDIO DIÁRIO DA EMPRESA EM R$">
+    <h4>INSIRA O NÚMERO DE DIAS DE PARALISAÇÃO DEVIDO A VAZAMENTO</h4>
+    <input type="text" id="input_DiasParalisado" placeholder="INSIRA O NÚMERO DE DIAS DE PARALISAÇÃO DEVIDO A VAZAMENTO">
+    <br>
+    <br>
+    <button onclick="calculos()">FAZER CALCULOS</button>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div id="div_CustosManutencao"></div>
+    <br>
+    <br>
+    <div id="div_MultasIndenizacao"></div>
+    <br>
+    <br>
+    <div id="div_EconomiaGeradaPeloSensor"></div>
+    <br>
+    <br>
+    <div id="div_PerdaDeProducaoPorParalisacao"></div>
+</body>
+</html>
+
+<script>
+function calculos(){
+    var CustosPecasManutencao = Number(input_CustoPecasManutencao.value);
+    var CustoMaoDeObraManutencao = Number(input_MaoDeObraManutencao.value);
+    var NumeroManutencoesPorAno = Number(input_ManutencoesPorAno.value);
+    var CustoTotalAnual = (CustosPecasManutencao + CustoMaoDeObraManutencao) * NumeroManutencoesPorAno;
+    var CustoTotalAnualFormatado = CustoTotalAnual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    div_CustosManutencao.innerHTML = `O custo anual com manutenção preventiva e corretiva é estimado em ${CustoTotalAnualFormatado}`;
+
+    var MultaFixaPorVazamento = Number(input_ValorFixoMultaVazamento.value);
+    var MultaDiariaDescumprimento = Number(input_ValorDiarioDescumprimento.value);
+    var NumeroDiasDescumprimento = Number(input_NumeroDiasDescumprimento.value);
+    var TrabalhadoresAfetados = Number(input_NumeroTrabalhadoresAfetados.value);
+    var IndenizacaoPorTrabalhador = Number(input_ValorIndenizacaoPorTrabalhador.value);
+
+    var MultaTotal = MultaFixaPorVazamento + (MultaDiariaDescumprimento * NumeroDiasDescumprimento);
+    var IndenizacaoTotal = TrabalhadoresAfetados * IndenizacaoPorTrabalhador;
+    var CustoTotalVazamento = MultaTotal + IndenizacaoTotal;
+    var CustoTotalVazamentoFormatado = CustoTotalVazamento.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    div_MultasIndenizacao.innerHTML = `Se houver um vazamento, estimamos o impacto financeiro total dele em ${CustoTotalVazamentoFormatado}`;
+
+    var CustoSensor = Number(input_CustoDoSensoreInstalacao.value);
+    var CustoManutencaoAnualSensor = Number(input_CustoManutencaoAnualSensor.value);
+    var EconomiaAnual = CustoTotalVazamento - CustoSensor - CustoManutencaoAnualSensor;
+    var EconomiaAnualFormatada = EconomiaAnual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    var roi = (EconomiaAnual / CustoSensor) * 100;
+    roi = Math.max(100, Math.min(roi, 0));
+    var roiFormatado = roi.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) + '%';
+
+    div_EconomiaGeradaPeloSensor.innerHTML = `O valor estimado que o sensor pode evitar em prejuízos em um ano é de ${EconomiaAnualFormatada} e o retorno sobre investimento é de ${roiFormatado}`;
+
+    var FaturamentoDiario = Number(input_FaturamentoDiario.value);
+    var NumeroDiasParalisado = Number(input_DiasParalisado.value);
+    var PerdaProducao = FaturamentoDiario * NumeroDiasParalisado;
+    var PerdaProducaoFormatada = PerdaProducao.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    div_PerdaDeProducaoPorParalisacao.innerHTML = `O valor estimado de perda de produção por paralisação é de ${PerdaProducaoFormatada}`;
+    }
+</script>
