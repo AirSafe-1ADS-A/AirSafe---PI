@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Multas Trabalhistas</title>
+    
+</head>
+
+<body>
+    Nome da Empresa
+    <input type="text" id="input_nome" placeholder="Nome da empresa">
+    <br>
+    <br>
+    Qual o porte da empresa? (Pequeno, Médio ou Grande)
+    <input type="text" id="input_porte" placeholder="Porte da empresa">
+   <br>
+   <br>
+   A empresa é reincidente? [Já foi processada?]
+   <input type="text" id="input_reinc" placeholder="Sim ou Não">
+    <br>
+    <br>
+    Quantidade de funcionários do setor
+    <input type="text" id="input_qtdfunc" placeholder="Número de funcionários">
+
+    <button onclick="calcular()">Calcular Economia</button>
+
+    <div id="div_msg"></div>
+
+</body>
+
+</html>
+<script>function calcular() {
+        var nome = input_nome.value
+        var porte = input_porte.value
+        var reinc = input_reinc.value
+        var qtd = Number(input_qtdfunc.value)
+
+        var conta = 0;
+        if (porte == "Pequeno") {
+            if (reinc == "Sim") {
+                conta = qtd * 1250 * 1.20
+            }else {conta = qtd * 1250}
+        }
+
+        if (porte == "Médio") {
+            if (reinc == "Sim") {
+                conta = qtd * 3200 * 1.20
+            }else {conta = qtd * 3200}
+        }
+
+        if (porte == "Grande") {
+            if (reinc == "Sim") {
+                conta = qtd * 10000 * 1.20
+            }else {conta = qtd * 10000}
+        }
+
+        var pessoa = conta / qtd
+
+        div_msg.innerHTML = `
+    <br> Considerando os danos por pessoa no setor frigorífico com ${qtd} funcionários, <br>
+    o valor da multa para a empresa ${nome}, de porte ${porte}, é de ${conta}. <br>
+    Com o monitoramento do AirSafe, a empresa ${nome} economizaria R$ ${conta}, totalizando R$${pessoa} <br>
+ por funcionário, uma vez que o vazamento seria alertado antes de causar danos.`
+    }
+</script>
