@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Financeiro | AirSafe</title>
+    <style>
+           body {
+            font-family: Arial, sans-serif;
+            background-color: #add8e6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; overflow-y: auto;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 600px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            color: #2c3e50;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        h3 {
+            color: #000000;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #8B0000;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #6B0000;
+        }
+
+        .result {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        #div_msg {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Air Safe</h1>
+        <h2>Simulador Financeiro</h2>
+        <br>
+        <h3 style="color: #8B0000;">Custos de Manutenção</h3>
+        <h3>Insira a área total (m²):</h3>
+        <input type="number" id="input_area" placeholder="Ex: 200">
+        <br><br>
+        <div id="div_msg"></div>   
+        
+        <h3>Insira o custo de peças por manutenção:</h3>
+        <input type="number" id="input_CustoPecasManutencao" placeholder="Ex: 5">
+        <br><br>
+
+        <h3>Insira o custo de mão de obra por manutenção:</h3>
+        <input type="number" id="input_MaoDeObraManutencao" placeholder="Ex: 4000">
+        <br><br>
+
+        <h3>Insira o número de manutenções por ano:</h3>
+        <input type="number" id="input_ManutencoesPorAno" placeholder="Ex: 5">
+        <br><br>
+    
+        <h3 style="color: #8B0000;">Custos com Multas e Indenizações</h3>
+
+        <h3>Insira o valor da multa fixa por vazamento em R$:</h3>
+        <input type="number" id="input_ValorFixoMultaVazamento" placeholder="Ex: 500000">
+        <br><br>
+
+        <h3>Insira o valor da multa diária em caso de descumprimento em R$:</h3>
+        <input type="number" id="input_ValorDiarioDescumprimento" placeholder="Ex: 5000">
+        <br><br>
+
+        <h3>Insira o número de dias em caso de descumprimento</h3>
+        <input type="number" id="input_NumeroDiasDescumprimento" placeholder="Ex: 20">
+        <br><br>
+
+        <h3>Insira o número de trabalhadores afetados com o vazamento:</h3>
+        <input type="number" id="input_NumeroTrabalhadoresAfetados" placeholder="Ex: 10">
+        <h3>Insira o valor da indenização por trabalhador em R$:</h3>
+        <input type="number" id="input_ValorIndenizacaoPorTrabalhador" placeholder="Ex: 100000">
+        <br><br>
+        <h3 style="color: #8B0000;">Economia Gerada Pelo Sensor</h3>
+        <h3>Insira o custo do sensor com a instalação em R$</h3>
+        <input type="number" id="input_CustoDoSensoreInstalacao" placeholder="Ex: 25000">
+        <h3>Insira o custo de manutenção anual do sensor</h3>
+        <input type="number" id="input_CustoManutencaoAnualSensor" placeholder="Ex: 10000">
+        <br><br>
+        <h3 style="color: #8B0000;">Perda de produção gerada por paralisação</h3>
+        <h3>Insira o faturamento diário da empresa em R$</h3>
+        <input type="number" id="input_FaturamentoDiario" placeholder="Ex: 100000">
+        <h3>Insira o número de dias de paralisação devido ao vazamento </h3>
+        <input type="number" id="input_DiasParalisado" placeholder="Ex: 20 ">
+        <br><br>
+        <button onclick="calcular()">Calcular</button>
+        <br><br><br>
+        <div id="div_resultadosFinais"></div>
+        <br><br>
+        <div id="div_CustosManutencao"></div>
+        <br>
+        <br>
+        <div id="div_MultasIndenizacao"></div>
+        <br>
+        <br>
+        <div id="div_EconomiaGeradaPeloSensor"></div>
+        <br>
+        <br>
+        <div id="div_PerdaDeProducaoPorParalisacao"></div>
+       
+
+    </div>
+</body>
+</html>
+
+<script>
+
+function calcular() {
+    var area = Number(input_area.value);
+    var sensor = 50;
+    var valorBase = 10000;
+    var sensorExtra = 3000;
+    var resultadosFinais = ""; 
+
+    if (area <= 0) {
+        alert("Insira um valor válido!");
+    } else if (area > 0 && area <= 50) {
+        
+        resultadosFinais = `
+        Você precisará de 1 sensor. <br>
+        O valor do seu investimento será de R$ 10000`;  
+    } else {
+        var sensoresNecessarios = Math.ceil(area / sensor);
+        var valorTotal = valorBase + (sensoresNecessarios - 1) * sensorExtra;
+       
+        resultadosFinais = `Você precisará de ${sensoresNecessarios} sensores.<br><br>  
+        O valor do seu investimento será de R$ ${valorTotal} <br><br>`;
+    }
+
+    var CustosPecasManutencao = Number(input_CustoPecasManutencao.value);
+    var CustoMaoDeObraManutencao = Number(input_MaoDeObraManutencao.value);
+    var NumeroManutencoesPorAno = Number(input_ManutencoesPorAno.value);
+    var CustoTotalAnual = (CustosPecasManutencao + CustoMaoDeObraManutencao) * NumeroManutencoesPorAno;
+    var CustoTotalAnualFormatado = CustoTotalAnual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    resultadosFinais += `<br> <br> O custo anual com manutenção preventiva e corretiva é estimado em ${CustoTotalAnualFormatado};`;  
+
+    var MultaFixaPorVazamento = Number(input_ValorFixoMultaVazamento.value);
+    var MultaDiariaDescumprimento = Number(input_ValorDiarioDescumprimento.value);
+    var NumeroDiasDescumprimento = Number(input_NumeroDiasDescumprimento.value);
+    var TrabalhadoresAfetados = Number(input_NumeroTrabalhadoresAfetados.value);
+    var IndenizacaoPorTrabalhador = Number(input_ValorIndenizacaoPorTrabalhador.value);
+
+    var MultaTotal = MultaFixaPorVazamento + (MultaDiariaDescumprimento * NumeroDiasDescumprimento);
+    var IndenizacaoTotal = TrabalhadoresAfetados * IndenizacaoPorTrabalhador;
+    var CustoTotalVazamento = MultaTotal + IndenizacaoTotal;
+    var CustoTotalVazamentoFormatado = CustoTotalVazamento.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    div_MultasIndenizacao.innerHTML = `Se houver um vazamento, estimamos o impacto financeiro total dele em ${CustoTotalVazamentoFormatado};<br><br>`;
+     
+
+    var CustoSensor = Number(input_CustoDoSensoreInstalacao.value);
+    var CustoManutencaoAnualSensor = Number(input_CustoManutencaoAnualSensor.value);
+    var EconomiaAnual = CustoTotalVazamento - CustoSensor - CustoManutencaoAnualSensor;
+    var EconomiaAnualFormatada = EconomiaAnual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    var roi = (EconomiaAnual / CustoSensor) * 100;
+    var roiFormatado = roi.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) + "%";
+
+    div_EconomiaGeradaPeloSensor.innerHTML = `O valor estimado que o sensor pode evitar em prejuízos em um ano é de ${EconomiaAnualFormatada} e o retorno sobre investimento é de ${roiFormatado};<br><br>`;
+   
+    var FaturamentoDiario = Number(input_FaturamentoDiario.value);
+    var NumeroDiasParalisado = Number(input_DiasParalisado.value);
+    var PerdaProducao = FaturamentoDiario * NumeroDiasParalisado;
+    var PerdaProducaoFormatada = PerdaProducao.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    div_PerdaDeProducaoPorParalisacao.innerHTML = `O valor estimado de perda de produção por paralisação é de ${PerdaProducaoFormatada};<br><br>`;
+     
+
+    div_resultadosFinais.innerHTML = resultadosFinais;
+}
+
+
+</script>
