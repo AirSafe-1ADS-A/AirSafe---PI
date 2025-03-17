@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Financeiro | AirSafe</title>
+    <!-- estilização básica -->
+    <style> 
+        body{
+            margin-top: 8px;
+            margin-bottom: 8px;
+            background-color: honeydew;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: black;
+        }
+
+        img {
+            width: 120px;
+            height: 120px;
+        }
+
+        h2{
+            color: steelblue;
+            font-size: 23px;
+        }
+
+        input {
+            border-radius: 6px;
+        }
+
+        button {
+            border-radius: 7px;
+            color: white;
+            background-color: steelblue;
+            padding: 6px;
+            cursor: pointer;
+
+        }
+
+        button:hover{
+            background-color: royalblue;
+        }
+        .resposta{
+            margin-top: 20px;
+            margin-bottom: 20px;
+            margin-left: 350px;
+            margin-right: 350px;
+        }
+    </style>
+</head>
+<body>  
+    
+    <img src="LogotipoAirSafe1.PNG">
+    <h2>Simulador Financeiro</h2> <!-- exibindo menssagem na aplicação web -->
+
+    Informe o faturamento diário da empresa (em reais):  <!-- exibindo menssagem na aplicação web -->
+    <br>
+    <input type="number" id="input_faturamento"> <!-- recebendo o valor na input e guardando no id declarado -->
+
+    <br><br><br>Informe a quantidade de acidentes que ocorreram de vazamento no ultimo ano: <!-- exibindo menssagem na aplicação web -->
+    <br>
+    <input type="number" id="input_vazamento"> <!-- recebendo o valor na input e guardando no id declarado -->
+
+    <br><br><br>Informe a quantidade total de dias paralisados no ultimo ano: <!-- exibindo menssagem na aplicação web -->
+    <br>
+    <input type="number" id="input_paralisacao"> <!-- recebendo o valor na input e guardando no id declarado -->
+    
+    <br><br><br>Informe a área total de câmara fria da empresa (em metros quadrados): <!-- exibindo menssagem na aplicação web -->
+    <br>
+    <input type="number" id="input_area"> <!-- recebendo o valor na input e guardando no id declarado -->
+
+    <br><br><br>Informe a quantidade de trabalhadores: <!-- exibindo mensagem na aplicação web -->
+    <br>
+    <input type="number" id="input_qtdFuncionarios"> <!-- recebendo o valor na input e guardando no id declarado -->
+
+    <br><br><br>Informe se a sua empresa é reincidente (já recebeu processo) [Sim/Não]: <!-- exibindo mensagem na aplicação web -->
+    <br>
+    <input type="text" id="input_reincidente"> <!-- recebendo o valor na input e guardando no id declarado -->
+
+    <br><br><br><button onclick="calcular()">Calcular</button> <!-- button utilizando o 'onclick' para chamar a função após clique -->
+    
+    <div id="div_mensagem"></div> <!-- espaço na web para futuramente exibir menssagem -->
+</body>
+</html>
+<script>
+    function calcular() { // Criando a dunção calcular
+                var diaFaturamento = Number(input_faturamento.value); // Entrada de dados do input
+                var qtdVazamento = Number(input_vazamento.value);// Entrada de dados do input
+                var paralisacao = Number(input_paralisacao.value);// Entrada de dados do input
+                var prejuizo = (diaFaturamento * (paralisacao - qtdVazamento));// Entrada de dados do input
+                
+
+                var porte = '';//Declaração da variável 'porte' que definirá posteriormente o porte da empresa (pequeno, médio, grande)
+                var reincidente = input_reincidente.value; // Entrada de dados do input
+                var qtdFuncionarios = Number(input_qtdFuncionarios.value);// Entrada de dados do input
+
+                var valorMultaFuncionario = 0; // Declaração de variável
+                var custoDesenvolvimento = 0; // Declaração de variável
+                var valorSensor = 0; // Declaração de variável
+                var areaSensor = 0; // Declaração de variável
+                var area = Number(input_area.value);// Entrada de dados do input
+
+                //Análise do porte 
+                //Estrutura condicional
+                if (area <= 1000) { // se area menor ou igual a 1000
+
+                    porte = "Pequeno"; // porte receber o valor
+                    custoDesenvolvimento = 10000; //Custo desenvolvimento recebe 10.000
+                    valorSensor = 3000; // Valor Sensor recebe 3.000
+                    areaSensor = 50; //Area sensor recebe 50 m²
+
+                    if (reincidente == "Sim") { // Se reincidente igual a sim
+                        valorMultaFuncionario = qtdFuncionarios * 1250 * 1.20 //em caso de reincidente o valor aumenta em 20%
+                    }else { //senão (reincidente diferente de sim)
+                        valorMultaFuncionario = qtdFuncionarios * 1250 //calculo do valor da multa
+                    }
+                }else if (area <= 2500) {// senão se area menor ou igual a 2500
+
+                    porte = "Médio";// porte receber o valor
+                    custoDesenvolvimento = 15000; //Custo desenvolvimento recebe 15.000
+                    valorSensor = 5000; // Valor Sensor recebe 5.000
+                    areaSensor = 75; //Area sensor recebe 75 m²
+
+                    if (reincidente == "Sim") { // Se reincidente igual a sim
+                        valorMultaFuncionario = qtdFuncionarios * 3200 * 1.20 //em caso de reincidente o valor aumenta em 20%
+                    }else { //senão (reincidente diferente de sim)
+                        valorMultaFuncionario = qtdFuncionarios * 3200 //calculo do valor da multa
+                    }
+                }else if (area > 5000) {// senão se area maior que 5000
+
+                    porte = "Grande";// porte receber o valor
+                    custoDesenvolvimento = 20000; //Custo desenvolvimento recebe 20.000
+                    valorSensor = 10000; // Valor Sensor recebe 10.000
+                    areaSensor = 100; //Area sensor recebe 100 m²
+
+                    if (reincidente == "Sim") { // Se reincidente igual a sim
+                            valorMultaFuncionario = qtdFuncionarios * 10000 * 1.2 //em caso de reincidente o valor aumenta em 20%0
+                        }else { //senão (reincidente diferente de sim)
+                            valorMultaFuncionario = qtdFuncionarios * 10000 //calculo do valor da multa
+                        }
+                }else{ //Se a area estiver inválide
+                    alert("A área informada está inválida.") //emite um alerta
+                }
+                var pessoa = valorMultaFuncionario / qtdFuncionarios; // calculo para descobrir o valor da multa por funcionário
+
+                //Custo do software
+                
+                var qtdSensores = Math.ceil(Number(area) / areaSensor); //calculo para saber a quantidade de sensores nescessários
+                var valorArea = qtdSensores * valorSensor; // quantidade de sensor e valor dos sensores
+                var valorSistema = custoDesenvolvimento + valorArea; //Calculo para saber o valor do sistema
+
+                //Retorno sobre o investimento
+                var roi = Math.ceil((prejuizo / valorSistema) * 100); //calculo para saber o retorno sobre investimento (ROI)
+
+
+                div_mensagem.innerHTML = `
+                    <p class="resposta"><br>O valor total do sistema será de <b>R$${valorSistema}</b>.</p> 
+
+                    <p class="resposta">Cada sensor cobre uma área de <b>${areaSensor}m²</b>.</p>
+
+                    <p  class="resposta">Para a área de <b>${area}m²</b>, sua empresa precisará de <b>${qtdSensores}</b> sensores. Com base nessa metragem, o porte da sua empresa é classificado como <b>${porte}</b>.</p>
+
+                    <p class="resposta"><br>Considerando o risco de danos aos funcionários no setor frigorífico, com <b>${qtdFuncionarios}</b> colaboradores, 
+                    a indenização da empresa, de porte <b>${porte}</b>, pode chegar a <b>R$${valorMultaFuncionario}</b>.</p>
+
+                    <p class="resposta"><br>Além disso, caso sua empresa seja responsabilizada por crime ambiental, a multa inicial seria de <b>R$500.000</b>. 
+                    Com isso, o prejuízo total poderia alcançar <b>R$${valorMultaFuncionario + 500000}</b>, acrescido de <b>R$5.000</b> para cada dia de descumprimento.</p>
+
+                    <p class="resposta">Com o monitoramento da AirSafe, sua empresa teria um aviso prévio sobre vazamentos, evitando prejuízos de até <b>R$${valorMultaFuncionario + 500000}</b>. 
+                    Isso representa uma economia direta de <b>R$${pessoa}</b> por funcionário e <b>R$500.000</b> referentes à multa ambiental, 
+                    uma vez que o sistema detectaria o problema antes que ele causasse danos severos.</p>
+
+                    <p class="resposta"><br>Com o monitoramento adequado, seriam necessários apenas <b>${qtdVazamento}</b> dias para resolver o vazamento.</p>
+
+                    <p class="resposta"><br>Levando em conta um faturamento diário de <b>R$${diaFaturamento}</b>, o investimento no sistema da AirSafe resultaria 
+                    em um retorno sobre o investimento (ROI) de <b>${roi}%</b> ao ano.</p>
+                `; // exibindo mensagem para o usuário
+
+    }
+</script> 
