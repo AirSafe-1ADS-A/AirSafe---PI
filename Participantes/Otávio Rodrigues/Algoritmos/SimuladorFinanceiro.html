@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PI</title>
+</head>
+<body align = "center">
+    <h1>Simulador Financeiro</h1>
+    Informe a  quantidade de maquinas de refrigeração tem na sua empresa:
+    <input type="text" id="input_maquina"><br><br>
+    Informe a quantidade de evaporizadores por maquina:
+    <input type="text" id="input_evapor">
+    <br><br>
+    <button onclick="Calcular()">Simular</button>
+    <div id="div_menssagem"></div>
+</body>
+</html>
+
+<script>
+    function Calcular(){
+        var maquinas = Number(input_maquina.value)*50000;
+
+        var evaporizadores = Number(input_evapor.value)*20000;
+
+        var totalMaquinas = maquinas + evaporizadores;
+        
+        var valorReforma= maquinas;
+
+        var manutMaquinaPrev = totalMaquinas * 0.10;
+
+        var manutMaquinaCorre = 70000*0.6;
+
+        var sensor = Number(input_maquina.value)*3000;
+
+        var lucro1 = (valorReforma - sensor + 10000);
+
+        var lucro2 = (manutMaquinaCorre - sensor + 10000);
+
+        div_menssagem.innerHTML=`<br>
+            O custo para a troca de todas as maquinas seria de: <b style="color:red">R$${valorReforma}</b>.<br>
+
+            O custo para a manutenção preventiva de todos os equipamentos seria de : <b style="color:red">R$${manutMaquinaPrev}</b>.<br>
+
+            O custo do nosso serviço de monitoramento seria de: <b style="color:red">R$${sensor}</b>.<br>
+
+            Caso 1 - O lucro que nosso sensor ofereceria, por não precisar fazer a reforma de todas as maquinas: <b style="color:green">R$${lucro1}</b>.<br>
+
+            Caso 2 - O lucro que nosso sensor ofereceria, por não precisar fazer a manutenção de correção de todas as maquinas que foram afetadas: <b style="color:green">R$${lucro2}</b>.<br><br>
+
+            Vida útil dos equipamentos sem manutenção: 5 a 10 anos<br>
+            Vida útil dos equipamentos com manutenção e Sensor: 15 a 20 anos<br>
+
+            
+            <b>Caso ocorra um vazamento grave de gás amônia será gasto: <b style="color:red">R$500000</b> de multa, mais 20  mil reais por cada funcionário afetado.<br>
+            Manutenção Corretiva caso isso ocorra em uma máquina: <b style="color:red">R$${manutMaquinaCorre}</b>, podendo ultrapassar esse valor.</b><br>
+
+        `
+    }
+
+</script>
