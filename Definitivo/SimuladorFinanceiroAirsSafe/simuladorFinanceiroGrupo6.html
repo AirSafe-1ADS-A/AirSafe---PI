@@ -13,6 +13,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             color: black;
+            justify-content: baseline;
         }
 
         img {
@@ -42,10 +43,23 @@
             background-color: royalblue;
         }
         .resposta{
-            margin-top: 20px;
+            margin-top: 15px;
             margin-bottom: 20px;
-            margin-left: 350px;
-            margin-right: 350px;
+            /* margin-left: 350px; */
+            margin-right: 50px;
+        }
+        .divisor{   
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            margin-left: 30px;
+            margin-right: 30px;
+        }
+        .div_legenda{
+            margin-top: 25px;
+            border: solid 1px;
+            border-radius: 1rem;  
+            padding: 2.5%;
         }
     </style>
 </head>
@@ -82,8 +96,12 @@
     </select><!-- recebendo o valor do select e guardando no id declarado -->
 
     <br><br><br><button onclick="calcular()">Calcular</button> <!-- button utilizando o 'onclick' para chamar a função após clique -->
-    
-    <div id="div_mensagem"></div> <!-- espaço na web para futuramente exibir menssagem -->
+    <div class="divisor">
+    <div class="div_mensagem" id="div_mensagem"></div> <!-- espaço na web para futuramente exibir menssagem -->
+    <div class="div_mensagem2" id="div_mensagem2"></div> <!-- espaço na web para futuramente exibir menssagem -->
+
+    <div class="div_legenda"id="div_legenda"></div>
+    </div>
 </body>
 </html>
 <script>
@@ -157,28 +175,31 @@
                 var roi = Math.ceil((prejuizo / valorSistema) * 100); //calculo para saber o retorno sobre investimento (ROI)
 
 
-                div_mensagem.innerHTML = `
-                    <p class="resposta"><br>O valor total do sistema será de <b>R$${valorSistema}</b>.</p> 
+                div_mensagem.innerHTML = `<b style="color: red"><h3> Sem o nosso Sistema: </h3></b>
 
-                    <p class="resposta">Cada sensor cobre uma área de <b>${areaSensor}m²</b>.</p>
-
-                    <p  class="resposta">Para a área de <b>${area}m²</b>, sua empresa precisará de <b>${qtdSensores}</b> sensores. Com base nessa metragem, o porte da sua empresa é classificado como <b>${porte}</b>.</p>
-
-                    <p class="resposta"><br>Considerando o risco de danos aos funcionários no setor frigorífico, com <b>${qtdFuncionarios}</b> colaboradores, 
-                    a indenização da empresa, de porte <b>${porte}</b>, pode chegar a <b style="color: red">R$${valorMultaFuncionario}</b>.</p>
-
-                    <p class="resposta"><br>Além disso, caso sua empresa seja responsabilizada por crime ambiental, a multa inicial seria de <b>R$500.000</b>. 
+                    <p class="resposta">Considerando o risco de danos aos funcionários no setor frigorífico, com <b>${qtdFuncionarios}</b> colaboradores, 
+                    a indenização da empresa, de porte <b>${porte}</b>, pode chegar a <b style="color: red">R$${valorMultaFuncionario}</b> sendo <b style="color: red">R$${pessoa}</b> por
+                     funcionário e caso sua empresa seja responsabilizada por crime ambiental, a multa seria de <b>R$500.000</b>. 
                     Com isso, o prejuízo total poderia alcançar <b style="color: red">R$${valorMultaFuncionario + 500000}</b>, acrescido de <b>R$5.000</b> para cada dia de descumprimento.</p>
+                        <br>.</p>
+                  `; // exibindo mensagem para o usuário
+                div_mensagem2.innerHTML = `      <b style="color: green"><h3> Utilizando nosso Sistema: </h3></b>
+                        
+                    <p class="resposta">O valor total do sistema será de <b>R$${valorSistema}</b> considerando <b style="color: blue">R$${custoDesenvolvimento}</b> para o custo de desenvolvimento
+                        e <b style="color: blue">R$${valorSensor}</b> por cada sensor. Para sua empresa de porte ${porte} será necessário ${qtdSensores} sensores, para abrangir a área de ${area}m², onde 
+                        cada sensor abrange a área de ${areaSensor}m².</p> 
 
-                    <p class="resposta">Com o monitoramento da AirSafe, sua empresa teria um aviso prévio sobre vazamentos, evitando prejuízos de até <b style="color: #00a200">R$${valorMultaFuncionario + 500000}</b>. 
-                    Isso representa uma economia direta de <b style="color: #00a200">R$${pessoa}</b> por funcionário e <b style="color: #00a200">R$500.000</b> referentes à multa ambiental, 
-                    uma vez que o sistema detectaria o problema antes que ele causasse danos severos.</p>
-
-                    <p class="resposta"><br>Com o monitoramento adequado, seriam necessários apenas <b>${qtdVazamento}</b> manutenções para resolver o vazamento.</p>
+                    <p class="resposta">Com o monitoramento da AirSafe, sua empresa teria um aviso prévio sobre vazamentos, evitando prejuízos anteriormente citados, aplicando de forma adequada
+                        seriam necessárias apenas <b>${qtdVazamento}</b> manutenções para resolver o vazamento tendo em vista que cada manutenção dure em torno de 24 horas.</p> 
 
                     <p class="resposta"><br>Levando em conta um faturamento diário de <b style="color: #00a200">R$${diaFaturamento}</b>, o investimento no sistema da AirSafe resultaria 
-                    em um retorno sobre o investimento (ROI) de <b style="color: #00a200">${roi}%</b> ao ano.</p>
-                `; // exibindo mensagem para o usuário
-
+                    em um retorno sobre o investimento (ROI) de <b style="color: #00a200">${roi}%</b> ao ano considerando que as manutenções seriam realizadas de forma mais rápida evitando paralizações.</p>
+                `
+                div_legenda.innerHTML = `
+                                        <h3> Legendas: </h3> <br>
+                                         <b style="color: red"><p> Prejuizos </b></p> <br>
+                                         <b style="color: green"><p> Lucros  </b></p> <br>
+                                         <b style="color: blue"><p> Custos Base </b></p> <br>
+                                         <b><p> Informativo </p></b>`
     }
 </script> 
