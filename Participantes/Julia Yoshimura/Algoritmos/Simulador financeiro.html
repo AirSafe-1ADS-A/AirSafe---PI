@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style = "text-align: center;"> 
+    <section>
+
+        <h1>CALCULADORA FINANCEIRA</h1>
+
+    </section>
+
+    <section>
+
+        <h3>Qual a sua receita total?</h3>
+        <input type="text" id="input_receita">
+
+        <h3>Quais os custos, ao total?</h3>
+        <input type="text" id="input_custo">
+     
+        
+    </section>
+
+
+<section>
+
+    <h3>Já recebeu uma multa? (sim/não)</h3>
+        <input type="text" id="input_multa">
+    
+        <h3>Se sim, em qual nível? <br> (grave/moderado/leve) </h3>
+        <input type="text" id="input_nivel">
+
+        
+        <br><br>
+        <button onclick="multa();calcular()">Calcular</button>
+        <div id="div_msg"></div>
+        <div id="div_msg2"></div> 
+
+</section>
+
+<section>
+      
+
+</section>
+
+
+</body>
+</html>
+<script>
+
+    function calcular() {
+        var receita = Number (input_receita.value)
+        var custos = Number (input_custo.value)
+        var roi = [(receita - custos)/custos] * 100 
+
+        div_msg.innerHTML = `Com a receita de ${receita} e o custo de ${custos}, você perde ${receita-custos} 
+                e têm um ROI(Retorno sobre Investimento) de ${roi}%.`
+
+    }
+
+    function multa() {
+        var multa = (input_multa.value)
+        var nivel = (input_nivel.value)
+
+        if (multa == "sim") {
+            
+            if (nivel == "grave"){
+                div_msg2.innerHTML = `Caso tenha recebido uma multa de infração grave, você pagará pelo menos R$50.000,00 e, no mínimo, perdeu 1000ppm de amônia, que convertido para porcentagem seria <b>0.1%</b>.`
+            }
+
+            else if (nivel =="moderado") {
+                div_msg2.innerHTML = `Caso tenha recebido uma multa de infração grave, você pagará pelo menos R$25.000,00 e, no mínimo, perdeu 300ppm de amônia, que convertido para porcentagem seria <b>0.03%</b>.`
+            }
+
+            else if (nivel == "leve") {
+                div_msg2.innerHTML = `Caso tenha recebido uma multa de infração grave, você pagará pelo menos R$10.000,00 e, no mínimo, perdeu 50ppm de amônia, que convertido para porcentagem seria <b>0.005%</b>.`
+            }
+
+            } else {
+                div_msg2.innerHTML = `Parabéns! Você não foi multado!`
+            }
+    }
+
+
+</script>
