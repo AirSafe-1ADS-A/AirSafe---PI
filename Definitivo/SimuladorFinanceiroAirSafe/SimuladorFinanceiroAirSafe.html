@@ -1,117 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador Financeiro | AirSafe</title>
-    <!-- estilização básica -->
-    <style> 
-        body{
-            margin-top: 8px;
-            margin-bottom: 8px;
-            background-color: honeydew;
-            font-family: Arial, sans-serif;
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #3498db, #ffff, #3498db);
+            background-size: cover;
+            font-family: "Poppins", sans-serif;
             text-align: center;
-            color: black;
-            justify-content: baseline;
+            color: #333;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 60px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         img {
             width: 120px;
-            height: 120px;
+            height: auto;
+            margin-bottom: 15px;
         }
 
-        h2{
-            color: steelblue;
-            font-size: 23px;
+        h2 {
+            color: #2c3e50;
+            font-size: 26px;
+            font-weight: 600;
         }
 
-        input {
-            border-radius: 6px;
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            display: block;
+            margin: 15px 0 5px;
+            text-align: left;
+            color: #555;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            box-sizing: border-box;
+            background: #f9f9f9;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #3498db;
+            outline: none;
+            background: #fff;
         }
 
         button {
-            border-radius: 7px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #69bef7, #014775);
             color: white;
-            background-color: steelblue;
-            padding: 6px;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
-
+            transition: 0.3s;
+            font-weight: 600;
         }
 
-        button:hover{
-            background-color: royalblue;
+        button:hover {
+            background: linear-gradient(135deg, #69bef7,#014775 );
+            transform: scale(1.02);
         }
-        .resposta{
-            margin-top: 15px;
-            margin-bottom: 20px;
-            /* margin-left: 350px; */
-            margin-right: 50px;
-        }
-        .divisor{   
-            margin-top: 10px;
-            display: flex;
-            justify-content: space-between;
-            margin-left: 30px;
-            margin-right: 30px;
-        }
-        .div_legenda{
-            margin-top: 25px;
-            border: solid 1px;
-            border-radius: 1rem;  
-            padding: 2.5%;
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #ecf0f1;
+            font-size: 16px;
+            text-align: left;
+            color: #333;
+            font-weight: 500;
+            animation: fadeIn 1s ease-in-out;
         }
     </style>
 </head>
-<body>  
-    
-    <img src="LogotipoAirSafe1.PNG">
-    <h2>Simulador Financeiro</h2> <!-- exibindo menssagem na aplicação web -->
 
-    Informe o faturamento diário da empresa (em reais):  <!-- exibindo menssagem na aplicação web -->
-    <br>
-    <input type="number" id="input_faturamento"> <!-- recebendo o valor na input e guardando no id declarado -->
+<body>
+    <div class="container">
+        <img src="LogotipoAirSafe1.PNG" alt="Logo AirSafe">
+        <h2>Simulador Financeiro</h2>
 
-    <br><br><br>Informe a quantidade de acidentes que ocorreram de vazamento no ultimo ano: <!-- exibindo menssagem na aplicação web -->
-    <br>
-    <input type="number" id="input_vazamento"> <!-- recebendo o valor na input e guardando no id declarado -->
+        <label>Faturamento diário (R$):</label>
+        <input type="number" id="input_faturamento">
 
-    <br><br><br>Informe a quantidade total de dias paralisados no ultimo ano: <!-- exibindo menssagem na aplicação web -->
-    <br>
-    <input type="number" id="input_paralisacao"> <!-- recebendo o valor na input e guardando no id declarado -->
-    
-    <br><br><br>Informe a área total de câmara fria da empresa (em metros quadrados): <!-- exibindo menssagem na aplicação web -->
-    <br>
-    <input type="number" id="input_area"> <!-- recebendo o valor na input e guardando no id declarado -->
+        <label>Acidentes de vazamento no último ano:</label>
+        <input type="number" id="input_vazamento">
 
-    <br><br><br>Informe a quantidade de trabalhadores: <!-- exibindo mensagem na aplicação web -->
-    <br>
-    <input type="number" id="input_qtdFuncionarios"> <!-- recebendo o valor na input e guardando no id declarado -->
+        <label>Dias paralisados no último ano:</label>
+        <input type="number" id="input_paralisacao">
 
-    <br><br><br>Informe se a sua empresa é reincidente (já recebeu processo) [Sim/Não]: <!-- exibindo mensagem na aplicação web -->
-    <br>
-    <select id="select_reincidente">
-        <option value="1">Sim</option>
-        <option value="2">Não</option>
-    </select><!-- recebendo o valor do select e guardando no id declarado -->
+        <label>Área total da câmara fria (m²):</label>
+        <input type="number" id="input_area">
 
-    <br><br><br><button onclick="calcular()">Calcular</button> <!-- button utilizando o 'onclick' para chamar a função após clique -->
-    <div class="divisor">
-    <div class="div_mensagem" id="div_mensagem"></div> <!-- espaço na web para futuramente exibir menssagem -->
-    <div class="div_mensagem2" id="div_mensagem2"></div> <!-- espaço na web para futuramente exibir menssagem -->
+        <label>Quantidade de trabalhadores:</label>
+        <input type="number" id="input_qtdFuncionarios">
 
-    <div class="div_legenda"id="div_legenda"></div>
+        <label>A empresa é reincidente?</label>
+        <select id="select_reincidente">
+            <option value="1">Sim</option>
+            <option value="2">Não</option>
+        </select>
+
+        <button onclick="calcular()">Calcular</button>
+
+        <div class="divisor">
+            <div class="div_legenda" id="div_legenda"></div>
+            <div class="div_mensagem" id="div_mensagem"></div> <!-- espaço na web para futuramente exibir menssagem -->
+            <div class="div_mensagem2" id="div_mensagem2"></div>
+            <!-- espaço na web para futuramente exibir menssagem -->
+
+        </div>
     </div>
 </body>
+
 </html>
+
 <script>
     function calcular() { // Criando a dunção calcular
                 var diaFaturamento = Number(input_faturamento.value); // Entrada de dados do input
                 var qtdVazamento = Number(input_vazamento.value);// Entrada de dados do input
                 var paralisacao = Number(input_paralisacao.value);// Entrada de dados do input
-                var prejuizo = (diaFaturamento * (paralisacao - qtdVazamento));// Entrada de dados do input
+                var prejuizo = diaFaturamento * paralisacao;              
                 
-
                 var porte = '';//Declaração da variável 'porte' que definirá posteriormente o porte da empresa (pequeno, médio, grande)
                 var reincidente = select_reincidente.value; // Entrada de dados do input
                 var qtdFuncionarios = Number(input_qtdFuncionarios.value);// Entrada de dados do input
@@ -173,7 +221,13 @@
 
                 //Retorno sobre o investimento
                 var roi = Math.ceil((prejuizo / valorSistema) * 100); //calculo para saber o retorno sobre investimento (ROI)
-
+                
+                div_legenda.innerHTML = `
+                                        <h3> Legendas: </h3> 
+                                         <b style="color: red"><p> Prejuizos </b></p> 
+                                         <b style="color: green"><p> Lucros  </b></p> 
+                                         <b style="color: blue"><p> Custos Base </b></p>
+                                         <b><p> Informativo </p></b>`
 
                 div_mensagem.innerHTML = `<b style="color: red"><h3> Sem o nosso Sistema: </h3></b>
 
@@ -183,6 +237,7 @@
                     o prejuízo total poderia alcançar <b style="color: red">R$${valorMultaFuncionario + 500000}</b>, acrescido de <b>R$5.000</b> para cada dia de descumprimento.</p>
                         <br>.</p>
                   `; // exibindo mensagem para o usuário
+
                 div_mensagem2.innerHTML = `      <b style="color: green"><h3> Utilizando nosso Sistema: </h3></b>
                         
                     <p class="resposta">O valor total do sistema será de <b>R$${valorSistema}</b> considerando <b style="color: blue">R$${custoDesenvolvimento}</b> para o custo de desenvolvimento
@@ -193,13 +248,8 @@
                         seriam necessárias apenas <b>${qtdVazamento}</b> manutenções para resolver o vazamento tendo em vista que cada manutenção dure em torno de 24 horas.</p> 
 
                     <p class="resposta"><br>Levando em conta um faturamento diário de <b style="color: #00a200">R$${diaFaturamento}</b>, o investimento no sistema da AirSafe resultaria 
-                    em um retorno sobre o investimento (ROI) de <b style="color: #00a200">${roi}%</b> ao ano considerando que as manutenções seriam realizadas de forma mais rápida evitando paralizações.</p>
+                    em um retorno sobre o investimento (ROI) será de até <b style="color: #00a200">${roi}%</b> ao ano considerando que as manutenções seriam realizadas de forma mais rápida evitando paralizações.</p>
                 `
-                div_legenda.innerHTML = `
-                                        <h3> Legendas: </h3> <br>
-                                         <b style="color: red"><p> Prejuizos </b></p> <br>
-                                         <b style="color: green"><p> Lucros  </b></p> <br>
-                                         <b style="color: blue"><p> Custos Base </b></p> <br>
-                                         <b><p> Informativo </p></b>`
+               
     }
 </script> 
