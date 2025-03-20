@@ -5,14 +5,23 @@ const int VALOR_MAXIMO = 1000; // Cria uma variável de valor maximo e a define 
 
 const float tolerancia = 0.19;// Cria uma variável de tolerancia para a respiração
 
+
+
+
 void setup(){ //Função que será executada uma vez
 	Serial.begin(9600); // Define que iniciará a comunicação em 9 segundos e 6 milisegundos
 }
 
-void loop(){ //Função que será executada continuamente sem parar
- 	int valorSensor = analogRead(PINO_SENSOR_MQ2); // Define o valor do sensor para a leitura do pino ou seja o Pino do Sensor
 
-	float porcentagem = ((float)(valorSensor - VALOR_MINIMO) / (VALOR_MAXIMO - VALOR_MINIMO)); // Calculo para informar a porcentagem (escala menor, não foi elevado a 100)
+
+
+
+void loop(){ //Função que será executada continuamente sem parar
+ 	int valorSensor = analogRead(PINO_SENSOR_MQ2); 
+  // Define o valor do sensor para a leitura do pino ou seja o Pino do Sensor
+
+	float porcentagem = ((float)(valorSensor - VALOR_MINIMO) / (VALOR_MAXIMO - VALOR_MINIMO)); 
+  // Calculo para informar a porcentagem (escala menor, não foi elevado a 100)
 	
 	if (porcentagem < 0){ // Inicia uma condição onde se a porcentagem for menor que 0 
 		porcentagem = 0; // Atribui que a porcentagem é igual a 0
@@ -27,3 +36,4 @@ Serial.println(tolerancia); // Mostra o valor da tolerancia
 
 delay(1000); // Delay de 1 segundo para iniciar novamente
 }
+
